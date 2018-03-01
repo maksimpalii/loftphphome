@@ -179,7 +179,7 @@ function task4()
 
 function task5()
 {
-    $newString = str_replace(" ", "", mb_strtolower(func_get_arg(0)));
+    $newString = str_replace(" ", "", strtolower(func_get_arg(0)));
 
     function utf8_strrev($str){
         preg_match_all('/./us', $str, $ar);
@@ -206,4 +206,42 @@ function task5()
         }
     }
     messagePalindrom($newString);
+}
+
+function task6(){
+    echo date("d.m.Y H:i") .PHP_EOL;
+    echo date("d.m.Y H:i:s");
+}
+
+function task7(){
+    $stringFirst = "Карл у Клары украл Кораллы";
+    echo $stringFirst .PHP_EOL;
+    echo str_replace('К', '', $stringFirst) .PHP_EOL . "\n";
+    $stringSecond = "Две бутылки лимонада";
+    $findArr = array("Две", "лимонада");
+    $replaceArr   = array("Три", "кваса");
+    echo $stringSecond .PHP_EOL;
+    echo str_replace($findArr, $replaceArr, $stringSecond);
+}
+function task8(){
+    function openRead($filename){
+        $handle = fopen($filename, "r");
+        $contents = fread($handle, filesize ($filename));
+        echo $contents;
+    }
+    openRead("test.txt");
+}
+function task9(){
+    $filename = func_get_arg(0);
+    $text = func_get_arg(1);
+    $openFileWrite = fopen($filename, "a");
+
+    $writeText = fwrite($openFileWrite, $text);
+    if ($writeText) {
+        echo "Запись успешна";
+    }
+    else{
+        echo "Ошибка при записи";
+    }
+    fclose($openFileWrite);
 }
