@@ -237,11 +237,8 @@ function task8(){
     }
     openRead("test.txt");
 }
-function task9(){
-    $filename = func_get_arg(0);
-    $text = func_get_arg(1);
-    $openFileWrite = fopen($filename, "a");
-
+function task9($filename = 'anothertest.txt', $text = 'Hello again!'){
+    $openFileWrite = fopen($filename, "w");
     $writeText = fwrite($openFileWrite, $text);
     if ($writeText) {
         echo "Запись успешна";
