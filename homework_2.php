@@ -15,7 +15,7 @@ $array_task2 = [23, 2, 1.4];
 //task4(12, 8);
 //echo PHP_EOL;
 
-//task5("m A d am");
+task5("m Ad aM");
 //echo PHP_EOL;
 
 //task6();
@@ -24,7 +24,7 @@ $array_task2 = [23, 2, 1.4];
 //task7();
 //echo PHP_EOL;
 
-task8();
+//task8();
 //echo PHP_EOL;
 
 //task9('anothertest.txt', 'Hello again!');

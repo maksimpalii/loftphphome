@@ -179,17 +179,23 @@ function task4()
 
 function task5()
 {
-    $newString = str_replace(" ", "", strtolower(func_get_arg(0)));
+    $incomString = str_replace(" ", "", mb_strtolower(func_get_arg(0)));
 
+    //вариант развернуть строку кирилицу
     function utf8_strrev($str){
         preg_match_all('/./us', $str, $ar);
         return implode(array_reverse($ar[0]));
     }
 
-    function checkPalindrom($newString)
+     function checkPalindrom($incomString)
     {
-        $revString = utf8_strrev($newString);
-        if ($newString == $revString) {
+        $revString = '';
+        for( $i = mb_strlen($incomString, "UTF-8"); $i >= 0; $i-- ){
+            $revString .= mb_substr( $incomString, $i, 1, "UTF-8" );
+        }
+
+        if ($incomString == $revString) {
+        //if ($incomString == utf8_strrev($incomString)) {
             $result = true;
         } else {
             $result = false;
@@ -197,15 +203,15 @@ function task5()
         return $result;
     }
 
-    function messagePalindrom($newString)
+    function messagePalindrom($incomString)
     {
-        if (checkPalindrom($newString) === true) {
+        if (checkPalindrom($incomString) === true) {
             echo "Палиндром – строка, одинаково читающаяся в обоих направлениях";
         } else {
             echo "Не палиндром";
         }
     }
-    messagePalindrom($newString);
+    messagePalindrom($incomString);
 }
 
 function task6(){
