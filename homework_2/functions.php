@@ -216,7 +216,8 @@ function task5()
 
 function task6(){
     echo date("d.m.Y H:i") .PHP_EOL;
-    echo date("d.m.Y H:i:s");
+    echo mktime(0, 0, 0, 02, 24, 2016) . PHP_EOL;
+    echo date("d.m.Y H:i:s", mktime(0, 0, 0, 02, 24, 2016));
 }
 
 function task7(){

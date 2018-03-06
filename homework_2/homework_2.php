@@ -12,13 +12,13 @@ $array_task2 = [23, 2, 1.4];
 //task3('+', 1, 2, 3, 5.2);
 //echo PHP_EOL;
 
-task4(12, 8);
+//task4(12, 8);
 //echo PHP_EOL;
 
 //task5("m Ad aM");
 //echo PHP_EOL;
 
-//task6();
+task6();
 //echo PHP_EOL;
 
 //task7();
