@@ -3,9 +3,6 @@ function task1()
 {
     $file = file_get_contents('data.xml');
     $xml = new SimpleXMLElement($file);
-    //print_r($xml->to->__toString());
-    //var_dump($xml);
-
     ?>
     <table border="1">
         <caption>PurchaseOrderNumber: <?php echo $xml->attributes()->PurchaseOrderNumber->__toString(); ?></caption>
@@ -31,65 +28,20 @@ function task1()
                 echo "<td>" . $values->Comment . "</td>";
                 echo "</tr>";
             }
-
         }
-
         ?>
-
     </table>
-
-    <h4>Adress</h4>
+    <h3>Adress</h3>
     <?php
     foreach ($xml->Address as $key => $value) {
-        echo "<p><b>" . $value->attributes()->Type . ": </b>";
-        echo $value->Name . $value->Street . $value->City;
-        echo $value->State . $value->Zip . $value->Country . "</p>";
+        echo "<p><b>" . $value->attributes()->Type->__toString() . "</b><br>";
+        echo $value->Name->__toString() . "<br>" . $value->Street->__toString() . "<br>";
+        echo $value->City->__toString() . ", " . $value->State->__toString() . ", " . $value->Country->__toString() . " " . $value->Zip->__toString() . "</p>";
     }
 
     echo "<h4>DeliveryNotes</h4>";
     echo $xml->DeliveryNotes->__toString();
-
-
 }
-
-
-//    echo $xml->attributes()->PurchaseOrderNumber->__toString();
-//    echo $xml->attributes()->OrderDate->__toString() . PHP_EOL;
-
-
-//    echo $xml->Address->attributes()->Type->__toString() . PHP_EOL;
-//    echo $xml->Address->Name->__toString() . PHP_EOL;
-//    echo $xml->Address->Street->__toString() . PHP_EOL;
-//    echo $xml->Address->City->__toString() . PHP_EOL;
-//    echo $xml->Address->State->__toString() . PHP_EOL;
-//    echo $xml->Address->Zip->__toString() . PHP_EOL;
-//    echo $xml->Address->Country->__toString() . PHP_EOL;
-//
-//    echo $xml->DeliveryNotes->__toString() . PHP_EOL;
-//
-//    echo $xml->Address[1]->attributes()->Type->__toString() . PHP_EOL;
-//    echo $xml->Address[1]->Name->__toString() . PHP_EOL;
-//    echo $xml->Address[1]->Street->__toString() . PHP_EOL;
-//    echo $xml->Address[1]->City->__toString() . PHP_EOL;
-//    echo $xml->Address[1]->State->__toString() . PHP_EOL;
-//    echo $xml->Address[1]->Zip->__toString() . PHP_EOL;
-//    echo $xml->Address[1]->Country->__toString() . PHP_EOL;
-//
-//    echo PHP_EOL;
-//
-//    echo $xml->Items->Item->attributes()->PartNumber->__toString() . PHP_EOL;
-//    echo $xml->Items->Item->ProductName->__toString() . PHP_EOL;
-//    echo $xml->Items->Item->Quantity->__toString() . PHP_EOL;
-//    echo $xml->Items->Item->USPrice->__toString() . PHP_EOL;
-//    echo $xml->Items->Item->Comment->__toString() . PHP_EOL;
-//
-//    echo PHP_EOL;
-//
-//    echo $xml->Items->Item->attributes()->PartNumber->__toString() . PHP_EOL;
-//    echo $xml->Items->Item->ProductName->__toString() . PHP_EOL;
-//    echo $xml->Items->Item->Quantity->__toString() . PHP_EOL;
-//    echo $xml->Items->Item->USPrice->__toString() . PHP_EOL;
-//    echo $xml->Items->Item->ShipDate->__toString() . PHP_EOL;
 
 function task2()
 {
@@ -128,11 +80,11 @@ function task2()
             if (is_array($arr2Decoded[$value])) {
                 foreach ($arrDecoded[$value] as $val => $key2) {
                     if ($arr2Decoded[$value][$val] != $arrDecoded[$value][$val]) {
-                        echo $val . " => " . $arr2Decoded[$value][$val] . PHP_EOL;
+                        echo $val . ": " . $arr2Decoded[$value][$val] . PHP_EOL;
                     }
                 }
             } else {
-                echo $value . " => " . $arr2Decoded[$value];
+                echo $value . ": " . $arr2Decoded[$value];
             }
         }
     }
@@ -176,9 +128,26 @@ function task4()
     $data = file_get_contents('https://en.wikipedia.org/w/api.php?action=query&titles=Main%20Page&prop=revisions&rvprop=content&format=json');
     $dataDecoded = json_decode($data, true);
 
-    // print_r($dataDecoded['query']['pages']['15580374']);
-    if (array_key_exists('pageid', $dataDecoded['query']['pages']['15580374'])) {
-        echo "pageid: " . $dataDecoded['query']['pages']['15580374']['pageid'] . PHP_EOL;
-        echo "Title: " . $dataDecoded['query']['pages']['15580374']['title'];
+    echo "Вывод через ключ<br>" . PHP_EOL;
+    echo "Pageid: " . $dataDecoded['query']['pages']['15580374']['pageid'] . "<br>" . PHP_EOL;
+    echo "Title: " . $dataDecoded['query']['pages']['15580374']['title'] . PHP_EOL;
+
+    function foundInArray()
+    {
+        $dats = func_get_arg(0);
+        if (is_array($dats) || is_object($dats)) {
+            foreach ($dats as $val) {
+                if (is_array($val) && array_key_exists('pageid', $val)) {
+                    echo "Pageid: " . $val['pageid'] . "<br>" . PHP_EOL;
+                    echo "Title: " . $val['title'];
+                } else {
+                    foundInArray($val);
+                }
+            }
+        }
     }
+
+    echo "<br><br>" . PHP_EOL;
+    echo "Через поиск<br>";
+    foundInArray($dataDecoded);
 }
